@@ -1,33 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
-const [formValues, setFormValues] = useState({
-  username: "Lambda School",
-  password: "i<3Lambd4"
-});
-const [error, setError] = useState(null);
-
-const handleChange = event => {
-  setFormValues({
-    ...formValues,
-    [event.target.name]: event.target.value
+const Login = (props) => {
+  const [formValues, setFormValues] = useState({
+    username: "Lambda School",
+    password: "i<3Lambd4"
   });
-};
+  const [error, setError] = useState(null);
 
-const handleSubmit = evt => {
-  evt.preventDefault();
-  axios
-    .post("http://localhost:5000/api/login", formValues)
-    .then(res => {
-      localStorage.setItem("token", res.data.payload);
-      // props.history.push("/friends");
-    })
-    .catch(error => {
-      console.log(error);
-      setError(error);
+  const handleChange = event => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.value
     });
-};
+  };
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    axios
+      .post("http://localhost:5000/api/login", formValues)
+      .then(res => {
+        localStorage.setItem("token", res.data.payload);
+        props.history.push("/bubbles-page");
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error);
+      });
+  };
 
   return (
     <>
